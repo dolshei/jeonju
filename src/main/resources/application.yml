@@ -1,0 +1,24 @@
+# 포트 설정
+server:
+  port: 8080
+
+# DB 접속 정보
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://115.85.180.233:3306/springbootdb?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+    username: sa
+    password: 6h5g4f#D@S!A
+
+  # JPA 관련 설정, datasource: 위치와 같은 위치에 작성해줘야 함.
+  jpa:
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      # create : 실행할 때 마다 전체 재시작
+      # update : table 을 drop 하지 않고 계속해서 사용하겠다는 의미
+
+  # Run 시 cache 값을 사용하지 않겠다는 의미 (완벽하지는 않지만 오류 방지)
+  thymeleaf:
+    cache: false
