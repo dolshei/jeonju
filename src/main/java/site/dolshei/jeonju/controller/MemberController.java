@@ -4,13 +4,17 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import site.dolshei.jeonju.dto.MemberDetailDTO;
 import site.dolshei.jeonju.dto.MemberLoginDTO;
 import site.dolshei.jeonju.dto.MemberSaveDTO;
 import site.dolshei.jeonju.service.MemberService;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor                // final 이 붙은 애들은 자동으로 생성자를 주입.
@@ -47,5 +51,13 @@ public class MemberController {
         } else {
             return "member/login";
         }
+    }
+
+    // 회원 목록 조회
+    @GetMapping("/list")
+    public String findAll(Model model) {
+        List<MemberDetailDTO> memberList = memberService.findAll();
+        model.addAttribute("memberList", memberList);
+        return "member/list";
     }
 }

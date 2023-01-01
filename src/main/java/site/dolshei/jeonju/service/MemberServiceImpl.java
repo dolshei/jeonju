@@ -2,10 +2,13 @@ package site.dolshei.jeonju.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import site.dolshei.jeonju.dto.MemberDetailDTO;
 import site.dolshei.jeonju.dto.MemberLoginDTO;
 import site.dolshei.jeonju.dto.MemberSaveDTO;
 import site.dolshei.jeonju.entity.MemberEntity;
 import site.dolshei.jeonju.repository.MemberRepository;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -41,5 +44,15 @@ public class MemberServiceImpl implements MemberService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public List<MemberDetailDTO> findAll() {
+        // findAll 이라는 메서드 호출 및 Entity 타입의 List 에 호출 결과 저장
+        List<MemberEntity> memberEntityList = memberRepository.findAll();
+        // Entity 타입의 List 를 DTO 타입의 List 로 변환
+        // 반드시 변환해 줄 필요는 없음.
+        List<MemberDetailDTO> memberDetailDTOList = MemberDetailDTO.change(memberEntityList);
+        return memberDetailDTOList;
     }
 }
