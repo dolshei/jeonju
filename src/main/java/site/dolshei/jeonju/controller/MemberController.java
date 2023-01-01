@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import site.dolshei.jeonju.dto.MemberDetailDTO;
 import site.dolshei.jeonju.dto.MemberLoginDTO;
 import site.dolshei.jeonju.dto.MemberSaveDTO;
@@ -59,5 +56,23 @@ public class MemberController {
         List<MemberDetailDTO> memberList = memberService.findAll();
         model.addAttribute("memberList", memberList);
         return "member/list";
+    }
+
+    // 상세조회
+    // /member/2, /member/15 -> /member/{memberId}
+    // @PathVariavle : 경로상에 있는 변수를 가져올 때 사용
+    @GetMapping("/{memberId}")
+    // @PathVariable 에서 받는 값의 이름과 매개변수 값의 이름이 같다면 (@PathVariable Long memberId, Model model)와 같이 생략가능
+    public String findById(@PathVariable("memberId") Long memberId, Model model) {
+        MemberDetailDTO memberDetailDTO = memberService.findById(memberId);
+        model.addAttribute("member", memberDetailDTO);
+        return "member/detail";
+    }
+
+    // 회원 삭제 (/member/delete/5)
+    @GetMapping("/delete/{memberId}")
+    public String deleteById(@PathVariable("memberId") Long memberId) {
+        memberService.deleteById(memberId);
+        return "redirect:/member/list";
     }
 }

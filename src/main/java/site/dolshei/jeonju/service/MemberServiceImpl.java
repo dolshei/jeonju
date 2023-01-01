@@ -55,4 +55,27 @@ public class MemberServiceImpl implements MemberService {
         List<MemberDetailDTO> memberDetailDTOList = MemberDetailDTO.change(memberEntityList);
         return memberDetailDTOList;
     }
+
+    @Override
+    public MemberDetailDTO findById(Long memberId) {
+        // findById 를 하게 되면 JPA 에서 Optional 타입으로 줌.
+        // Optional<MemberEntity> memberEntityOptional = memberRepository.findById(memberId);
+
+        // Optional 타입을 Entity 타입으로 바꾸기 위해 .get() 을 붙임
+        // MemberEntity memberEntity = memberEntityOptional.get();
+
+        // Entity 타입을 DTO 타입으로 바꾸기 위해 DTO 에 만들어 놓은 메서드를 호출해 변환
+        // MemberDetailDTO memberDetailDTO = MemberDetailDTO.toMemberDetailDTO(memberEntity);
+
+        // 변환된 DTO 타입을 리턴함.
+        // return memberDetailDTO;
+
+        // 위 코드를 아래 한줄로 요약 가능
+        return MemberDetailDTO.toMemberDetailDTO(memberRepository.findById(memberId).get());
+    }
+
+    @Override
+    public void deleteById(Long memberId) {
+        memberRepository.deleteById(memberId);
+    }
 }

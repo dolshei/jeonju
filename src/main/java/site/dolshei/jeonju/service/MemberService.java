@@ -12,4 +12,8 @@ public interface MemberService {
     boolean login(MemberLoginDTO memberLoginDTO);
 
     List<MemberDetailDTO> findAll();
+
+    MemberDetailDTO findById(Long memberId);
+
+    void deleteById(Long memberId);
 }
