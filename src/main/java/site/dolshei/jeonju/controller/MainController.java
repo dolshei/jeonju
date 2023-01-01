@@ -11,9 +11,4 @@ public class MainController {
         return "index";
     }
 
-    // 회원가입 페이지 요청
-    @GetMapping("save")
-    public String saveForm() {
-        return "member/save";
-    }
 }
