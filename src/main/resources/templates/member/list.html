@@ -4,21 +4,29 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 <script>
 
     function deleteById(memberId) {
+        alert(memberId);
         console.log(memberId);
         const reqUrl = "/member/" + memberId;
         $.ajax({
-            type: "delete",
-            url: reqUrl,
-            //dataType:"json",        // 받아올 필요가 없으면 생략가능
-            success: function () {
-                console.log("ajax success")
-                location.href = "/member/list"      // 삭제 성공 시 회원목록 페이지를 다시 요청
+            type : "delete",
+            url : reqUrl,
+            async : true,
+            headers : {
+                "Content-Type" : "application/json",
+                "X-HTTP-Method-Override" : "POST"
             },
-            error: function () {
-                alert("ajax fail");
+            dataType:"json",
+            success : function (data) {
+                console.log(data);
+                location.href = "/member/list";    // 삭제 성공 시 회원목록 페이지를 다시 요청
+            },
+            error : function () {
+                alert("Fail!");
+                location.href = "/member/list";
             }
         })
     }
@@ -57,7 +65,7 @@
             <!-- detail 주소 처리방식 @{|/주소/${같이 보낼 데이터}|} -->
             <td><a th:href="@{|/member/${member.memberId}|}">조회</a></td>
             <td><a th:href="@{|/member/delete/${member.memberId}|}">삭제</a></td>
-            <td><button th:onclick="deleteById([[${member.memberId}]])">삭제</button></td>
+            <td><button type="button" th:onclick="|location.href='javascript:deleteById(${member.memberId});'|">삭제</button></td>
         </tr>
         </tbody>
     </table>
