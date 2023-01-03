@@ -4,6 +4,36 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<script>
+
+    function deleteById(memberId) {
+        console.log(memberId);
+        const reqUrl = "/member/" + memberId;
+        $.ajax({
+            type: "delete",
+            url: reqUrl,
+            //dataType:"json",        // 받아올 필요가 없으면 생략가능
+            success: function () {
+                console.log("ajax success")
+                location.href = "/member/list"      // 삭제 성공 시 회원목록 페이지를 다시 요청
+            },
+            error: function () {
+                alert("ajax fail");
+            }
+        })
+    }
+    
+    // 아래도 함수 선언 방법 중 하나
+    // 함수이름 : deleteFn, 매개변수 : memberId
+    const deleteFn = (memberId) => {
+      console.log(memberId)
+    }
+    
+    // 함수이름 : deleteFn2, 매개변수 : X
+    const deleteFn2 = () => {
+      
+    }
+</script>
 <body>
     <h2>List.html</h2>
     <table>
@@ -27,6 +57,7 @@
             <!-- detail 주소 처리방식 @{|/주소/${같이 보낼 데이터}|} -->
             <td><a th:href="@{|/member/${member.memberId}|}">조회</a></td>
             <td><a th:href="@{|/member/delete/${member.memberId}|}">삭제</a></td>
+            <td><button th:onclick="deleteById([[${member.memberId}]])">삭제</button></td>
         </tr>
         </tbody>
     </table>

@@ -3,6 +3,8 @@ package site.dolshei.jeonju.controller;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -74,5 +76,17 @@ public class MemberController {
     public String deleteById(@PathVariable("memberId") Long memberId) {
         memberService.deleteById(memberId);
         return "redirect:/member/list";
+    }
+
+    // 회원 삭제 (/member/5)
+    @DeleteMapping("/{memberId}")
+    public ResponseEntity deleteById2(@PathVariable("memberId") Long memberId) {
+        memberService.deleteById(memberId);
+        /*
+            단순 화면출력이 아닌 데이터를 리턴하고자 할 때 사용하는 리턴 방식
+            ResponseEntity : 데이터 & 상태코드(200, 400, 405, 500 등 오류코드)를 함께 리턴할 수 있음
+            @ResponseBody : 데이터를 리턴할 수 있음
+         */
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
