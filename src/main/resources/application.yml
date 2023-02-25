@@ -8,7 +8,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://115.85.180.233:3306/sampledb?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
     username: sa
-    password: 6h5g4f#D@S!A
+    password: 1111111
 
   # JPA 관련 설정, datasource: 위치와 같은 위치에 작성해줘야 함.
   jpa:
